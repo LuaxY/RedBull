@@ -1,0 +1,63 @@
+
+.container-fluid, .row {
+    background-color: peru;
+    height: 100vh;
+}
+
+.img {
+    border-radius: 20px;
+    transition: .5s ease;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -o-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.img:hover {
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 5px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.txt {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.img:hover + .txt, .txt:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#garcon + .txt .text {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+}
+
+#fille + .txt .text {
+    background-color: #e55f74;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+}
+
+
+@media (max-width: 990px) {
+    .img {
+        margin-top: 2.5vh;
+        height: 45vh;
+    }
+}
+
+@media (max-width: 767px) {
+    .img {
+        margin-top: 2.5vh;
+        height: 45vh;
+    }
+}

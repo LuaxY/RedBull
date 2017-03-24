@@ -4,22 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Skills.Connect">
 
     <link rel="shortcut icon" href="img/favicon.png">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <script type="text/javascript" src="js/tether.js"></script>
     <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/classes.js"></script>
-    <script type="text/javascript" src="js/functions.js"></script>
-    <script type="text/javascript" src="js/seriousgame.js"></script>
 
     <title>Red Student</title>
 </head>
 <body>
-
+<div class="container-fluid">
+    <div class="row align-items-md-center">
+        <div class="col-12 col-lg-3 offset-lg-2 text-center" >
+            <img onclick="localStorage.setItem('sexe', 'fille');document.location='jeu.html'" id="fille" src="img/girl.png" class="img" alt="fille" />
+            <div class="txt">
+                <div class="text">Fille</div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 offset-lg-2 text-center" >
+            <img onclick="localStorage.setItem('sexe', 'garcon');document.location='jeu.html'" id="garcon" src="img/boy.png" class="img" alt="garçon" />
+            <div class="txt">
+                <div class="text">Garçon</div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
