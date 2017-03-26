@@ -1,297 +1,273 @@
-html, body {
-    min-width: 1346px;
+/*
+    Pour le dev du jeu
+ */
+.red {
+    background-color: red;
 }
 
+.gray {
+    background-color: gray;
+}
 
-.cardBody::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
+/*
+    Elements
+ */
+html, body {
+    /* min-width: 1346px; */
+    height: 100vh;
+    width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #F5F5F5;
 }
 
-.cardBody::-webkit-scrollbar
-{
+body::-webkit-scrollbar {
     width: 6px;
     background-color: #F5F5F5;
 }
 
-.cardBody::-webkit-scrollbar-thumb
-{
+body::-webkit-scrollbar-thumb {
     background-color: #6e6e6e;
 }
-p {
-    animation : none;
-    animation-delay : 0;
-    animation-direction : normal;
-    animation-duration : 0;
-    animation-fill-mode : none;
-    animation-iteration-count : 1;
-    animation-name : none;
-    animation-play-state : running;
-    animation-timing-function : ease;
-    backface-visibility : visible;
-    background : 0;
-    background-attachment : scroll;
-    background-clip : border-box;
-    background-color : transparent;
-    background-image : none;
-    background-origin : padding-box;
-    background-position : 0 0;
-    background-position-x : 0;
-    background-position-y : 0;
-    background-repeat : repeat;
-    background-size : auto auto;
-    border : 0;
-    border-style : none;
-    border-width : medium;
-    border-color : inherit;
-    border-bottom : 0;
-    border-bottom-color : inherit;
-    border-bottom-left-radius : 0;
-    border-bottom-right-radius : 0;
-    border-bottom-style : none;
-    border-bottom-width : medium;
-    border-collapse : separate;
-    border-image : none;
-    border-left : 0;
-    border-left-color : inherit;
-    border-left-style : none;
-    border-left-width : medium;
-    border-radius : 0;
-    border-right : 0;
-    border-right-color : inherit;
-    border-right-style : none;
-    border-right-width : medium;
-    border-spacing : 0;
-    border-top : 0;
-    border-top-color : inherit;
-    border-top-left-radius : 0;
-    border-top-right-radius : 0;
-    border-top-style : none;
-    border-top-width : medium;
-    bottom : auto;
-    box-shadow : none;
-    box-sizing : content-box;
-    caption-side : top;
-    clear : none;
-    clip : auto;
-    color : inherit;
-    columns : auto;
-    column-count : auto;
-    column-fill : balance;
-    column-gap : normal;
-    column-rule : medium none currentColor;
-    column-rule-color : currentColor;
-    column-rule-style : none;
-    column-rule-width : none;
-    column-span : 1;
-    column-width : auto;
-    content : normal;
-    counter-increment : none;
-    counter-reset : none;
-    cursor : auto;
-    direction : ltr;
-    display : inline;
-    empty-cells : show;
-    float : none;
-    font : normal;
-    font-family : inherit;
-    font-size : medium;
-    font-style : normal;
-    font-variant : normal;
-    font-weight : normal;
-    height : auto;
-    hyphens : none;
-    left : auto;
-    letter-spacing : normal;
-    line-height : normal;
-    list-style : none;
-    list-style-image : none;
-    list-style-position : outside;
-    list-style-type : disc;
-    margin : 0;
-    margin-bottom : 0;
-    margin-left : 0;
-    margin-right : 0;
-    margin-top : 0;
-    max-height : none;
-    max-width : none;
-    min-height : 0;
-    min-width : 0;
-    opacity : 1;
-    orphans : 0;
-    outline : 0;
-    outline-color : invert;
-    outline-style : none;
-    outline-width : medium;
-    overflow : visible;
-    overflow-x : visible;
-    overflow-y : visible;
-    padding : 0;
-    padding-bottom : 0;
-    padding-left : 0;
-    padding-right : 0;
-    padding-top : 0;
-    page-break-after : auto;
-    page-break-before : auto;
-    page-break-inside : auto;
-    perspective : none;
-    perspective-origin : 50% 50%;
-    position : static;
-    /* May need to alter quotes for different locales (e.g fr) */
-    quotes : '\201C' '\201D' '\2018' '\2019';
-    right : auto;
-    tab-size : 8;
-    table-layout : auto;
-    text-align : inherit;
-    text-align-last : auto;
-    text-decoration : none;
-    text-decoration-color : inherit;
-    text-decoration-line : none;
-    text-decoration-style : solid;
-    text-indent : 0;
-    text-shadow : none;
-    text-transform : none;
-    top : auto;
-    transform : none;
-    transform-style : flat;
-    transition : none;
-    transition-delay : 0s;
-    transition-duration : 0s;
-    transition-property : none;
-    transition-timing-function : ease;
-    unicode-bidi : normal;
-    vertical-align : baseline;
-    visibility : visible;
-    white-space : normal;
-    widows : 0;
-    width : auto;
-    word-spacing : normal;
-    z-index : auto;
-}
 
-/* IDs */
+/*
+    IDs
+ */
 #container {
-    height:86vh;
+    height: 100%;
+    width: 100%;
+    background-color: #afd3d4;
 }
 
 #topBar {
-    height:4vh;
+    -webkit-box-shadow: 0px -20px 23px 20px rgba(33, 33, 33, 1);
+    -moz-box-shadow: 0px -20px 23px 20px rgba(33, 33, 33, 1);
+    box-shadow: 0px -20px 23px 20px rgba(33, 33, 33, 1);
+    background-color: #c6eaea;
+    height: 8%;
 }
 
-#argent {
-    display: inline-block;
-}
-#clients {
-    display: inline-block;
+#topBar div:first-child {
+    background-color: white;
+    height: 100%;
 }
 
-#employes {
-    display: inline-block;
+#topBar div:first-child p {
+    margin-left: 20px;
 }
 
-#asideLeft {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    bottom: 0;
+#topBar div:first-child p:nth-child(2) {
+    margin-right: 10px;
 }
 
-#asideRight {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    bottom: 0;
+#containerJeu {
+    height: 92%;
 }
 
-#panelRight {
-    height:98%;
+#sous p {
+    font-size: 35px;
 }
 
-#panelLeft {
-    height:98%;
+#etudiant {
+    max-height: 100%;
 }
 
-#siege {
-    text-align: center;
+
+/*
+    Classes
+ */
+
+.progress-bar {
+    color: #3d383a;
+    height: 30px;
+    line-height: 30px;
 }
 
-/* Classes */
-.img_siege {
-    position: absolute;
-    top: 25%;
-    width: 100%;
-    height: 50%;
+.bg-warning {
+    background-color: #e7d523 !important;
 }
 
-.img_siege img {
-     width: 95%;
- }
+/*
+    Media Queries
+ */
 
-.actions_box {
-    text-align: left;
+@media (max-width: 769px) {
+
 }
 
-.action {
-    border: 1px solid black;
+@media (max-width: 767px) {
+    #action {
+        overflow: scroll;
+        height:90%;
+        margin-top: 5%;
+    }
 }
 
-.img_action {
-    width: 50px;
-    height: 50px;
-    border: 5px ;
+@media (min-width: 767px) {
+
 }
 
-.txt_action {
-    height: 50px;
-    line-height: 50px;
-    text-align : center;
-    white-space: nowrap;
-}
-
-.img_plus {
-    text-align: right;
-}
-
-.badge {
-    background-color: #464a4c;
-}
-
-.contentNoWrap {
-    white-space: nowrap;
-}
-
-.badge {
-    background-color: #464a4c;
-}
-
-.plusStuff {
-    font-size: 30px;
-}
-
-.moinsStuff {
-    width: 20px;
-    color: white;
-    height: 20px;
-    margin-right: 12px;
-    background-color: #c12e2a;
-}
-
-.disable {
-    background: #8b8989;
-}
-
-#panelLeft .row {
-    color:#444;
-    border:1px solid #CCC;
-    background: #f0ecee;
-    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-    cursor:pointer;
-    padding: 5px;
-}
-
-#panelLeft .cardBody .row:active {
-    color:white;
-    background: #838383;
-    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+/*
+    Resets
+ */
+p {
+    animation: none;
+    animation-delay: 0;
+    animation-direction: normal;
+    animation-duration: 0;
+    animation-fill-mode: none;
+    animation-iteration-count: 1;
+    animation-name: none;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background: 0;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: none;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-position-x: 0;
+    background-position-y: 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+    border: 0;
+    border-style: none;
+    border-width: medium;
+    border-color: inherit;
+    border-bottom: 0;
+    border-bottom-color: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-style: none;
+    border-bottom-width: medium;
+    border-collapse: separate;
+    border-image: none;
+    border-left: 0;
+    border-left-color: inherit;
+    border-left-style: none;
+    border-left-width: medium;
+    border-radius: 0;
+    border-right: 0;
+    border-right-color: inherit;
+    border-right-style: none;
+    border-right-width: medium;
+    border-spacing: 0;
+    border-top: 0;
+    border-top-color: inherit;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top-style: none;
+    border-top-width: medium;
+    bottom: auto;
+    box-shadow: none;
+    box-sizing: content-box;
+    caption-side: top;
+    clear: none;
+    clip: auto;
+    color: inherit;
+    columns: auto;
+    column-count: auto;
+    column-fill: balance;
+    column-gap: normal;
+    column-rule: medium none currentColor;
+    column-rule-color: currentColor;
+    column-rule-style: none;
+    column-rule-width: none;
+    column-span: 1;
+    column-width: auto;
+    content: normal;
+    counter-increment: none;
+    counter-reset: none;
+    cursor: auto;
+    direction: ltr;
+    display: inline;
+    empty-cells: show;
+    float: none;
+    font-family: inherit;
+    font-size: medium;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: auto;
+    hyphens: none;
+    left: auto;
+    letter-spacing: normal;
+    line-height: normal;
+    list-style: none;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: disc;
+    margin: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    max-height: none;
+    max-width: none;
+    min-height: 0;
+    min-width: 0;
+    opacity: 1;
+    orphans: 0;
+    outline: 0;
+    outline-color: invert;
+    outline-style: none;
+    outline-width: medium;
+    overflow: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    page-break-after: auto;
+    page-break-before: auto;
+    page-break-inside: auto;
+    perspective: none;
+    perspective-origin: 50% 50%;
+    position: static;
+    /* May need to alter quotes for different locales (e.g fr) */
+    quotes: '\201C' '\201D' '\2018' '\2019';
+    right: auto;
+    tab-size: 8;
+    table-layout: auto;
+    text-align: inherit;
+    text-align-last: auto;
+    text-decoration: none;
+    text-decoration-color: inherit;
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-indent: 0;
+    text-shadow: none;
+    text-transform: none;
+    top: auto;
+    transform: none;
+    transform-style: flat;
+    transition: none;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: none;
+    transition-timing-function: ease;
+    unicode-bidi: normal;
+    vertical-align: baseline;
+    visibility: visible;
+    white-space: normal;
+    widows: 0;
+    width: auto;
+    word-spacing: normal;
+    z-index: auto;
 }
