@@ -18,76 +18,96 @@
     <script type="text/javascript" src="js/seriousgame.js"></script>
     <title>Red Student</title>
 </head>
+
 <body>
-<div id="container" class="container-fluid">
-    <div id="topBar" class="row d-flex align-items-center justify-content-end">
-        <div class="mr-auto p-2 d-flex align-items-center justify-content-end">
-            <p class="h4">INGE</p>
-            <p class="h4">B1</p>
+
+    <div id="container" class="container-fluid">
+        <div id="topBar" class="row d-flex align-items-center justify-content-end">
+            <div class="mr-auto p-2 d-flex align-items-center justify-content-end">
+                <p class="h4">INGE</p>
+                <p class="h4">B1</p>
+                <p class="h4">LVL 1</p>
+            </div>
+            <div class="p-2">
+                <p class="h4"><img id="time" src="img/soleil.png"></p>
+            </div>
         </div>
-        <div class="p-2">
-            <p class="h4">time</p>
+
+        <div id="containerJeu" class="row">
+            <div id="action" class="col-4 col-md-3 d-md-flex align-items-center justify-content-center">
+                <div id="lstAction" class="d-flex align-items-center justify-content-center">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">BOIRE UN REDBULL<img class="icone" src="img/icones/xp+.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action">R&Eacute;VISER<img class="icone" src="img/icones/xp++.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action">TRAVAILLER<img class="icone" src="img/icones/50euros.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action">ALLER EN SOIR&Eacute;E <br>
+                            <span class="small-text">(bar + boîte)</span><img class="icone" src="img/icones/motiv+.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">ALLER EN SOIR&Eacute;E <br>
+                            <span class="small-text">(boîte)</span><img class="icone" src="img/icones/motiv++.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action">FAIRE DU SPORT <br>
+                            <span class="small-text">(salle de sport)</span><img class="icone" src="img/icones/sant%C3%A9++.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">FAIRE DU SPORT <br>
+                            <span class="small-text">(courir)</span><img class="icone" src="img/icones/sant%C3%A9+.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action">ALLER AUX TOILETTES <img class="icone" src="img/icones/sant%C3%A9+.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">RENCONTRER DES GENS <img class="icone" src="img/icones/motiv+xp.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action">ACHETER DES HABITS <img class="icone" src="img/icones/argent-50.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">FAIRE LES COURSES <img class="icone" src="img/icones/argent-30.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action">MANGER<img class="icone" src="img/icones/argent-10.png"><img class="icone" src="img/icones/energie+.png"></a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">DORMIR <img class="icone" src="img/icones/energie+.png"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rowEtudiant" class="col-6 col-md-5 d-flex align-items-center justify-content-center">
+                <div id="boxEtudiant" class="row d-flex align-items-center justify-content-center">
+                    <img id="etudiant" class="img-fluid" src="" alt="Etudiant">
+                </div>
+            </div>
+        
+            <div id="aside" class="col-12 col-md-3 d-md-flex align-items-center justify-content-center">
+                <div class="row">
+                    <div class="col-6 col-md-12 d-flex align-items-center justify-content-center align-items-md-center justify-content-md-start">
+                        <div id="stat-titre" class="p-1 d-flex align-items-center justify-content-center align-items-md-center justify-content-md-start">
+                            <div id="titre">STATS</div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-12">
+                        <span class="stat-name">Santé</span>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 5%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100"></div> <!--bg-success-->
+                        </div>
+                        <span class="stat-name">énergie</span>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75"
+                                aria-valuemin="0" aria-valuemax="100"></div> <!--bg-warning-->
+                        </div>
+                        <span class="stat-name">motivation</span>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100"
+                                aria-valuemin="0" aria-valuemax="100"></div> <!--bg-danger-->
+                        </div>
+                        <span class="stat-name">argent</span>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100">
+                            </div> <!--bg-primary-->
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div id="xp-bar">
+                            <div class="progress xp">
+                                <div class="xp progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100"
+                                    aria-valuemin="0" aria-valuemax="100"></div> <!--bg-info-->
+                            </div>
+                            <span id="xp">XP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div id="containerJeu" class="row">
-        <div id="action" class="col-6 col-md-4 d-md-flex align-items-center justify-content-center">
-            <div id="lstAction" class="d-flex align-items-center justify-content-center">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
-                    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros zer tzert
-                        zertzert zert zert zertzer t</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                </div>
-            </div>
-        </div>
-        <div id="rowEtudiant" class="col-6 col-md-4 d-flex align-items-center justify-content-center">
-            <div id="boxEtudiant" class="row d-flex align-items-center justify-content-center">
-                <img id="etudiant" class="img-fluid" src="" alt="Etudiant">
-            </div>
-        </div>
-        <div id="aside" class="col-12 col-md-4 d-md-flex align-items-center justify-content-center">
-            <div class="row">
-                <div class="col-6 col-md-12 d-flex align-items-center justify-content-center align-items-md-center justify-content-md-start">
-                    <div class="p-2 d-flex align-items-center justify-content-center align-items-md-center justify-content-md-start">
-                        STATS
-                    </div>
-                </div>
-                <div class="col-6 col-md-12">
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75"
-                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
-                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100"
-                             aria-valuemin="0" aria-valuemax="100">
-                            <p>100</p> <b style="font-size: 20px">€</b></div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100"
-                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>
