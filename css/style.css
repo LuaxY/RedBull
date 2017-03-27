@@ -45,6 +45,11 @@ body::-webkit-scrollbar-thumb {
 /*
     IDs
  */
+
+#aside {
+    margin-left: 3.5em;
+}
+
 #container {
     height: 100%;
     width: 100%;
@@ -95,7 +100,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #etudiant {
-    max-height: 700px;
+    max-height: 100%;
 }
 
 #lstAction {
@@ -103,6 +108,8 @@ body::-webkit-scrollbar-thumb {
     -webkit-box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
+    font-size: small;
+    color: #afd3d4;
 }
 
 #lstAction .list-group a:first-child:before {
@@ -138,15 +145,48 @@ body::-webkit-scrollbar-thumb {
 /*
     Classes
  */
+.small-text {
+    font-size: smaller;
+}
+
+.icone {
+    width: 45px;
+    margin-left: 1em;
+}
+
+.list-group-item {
+    padding: 0.2em 0.5em;
+    color: #afd3d4;
+}
+
+.progress {
+    height: 25px;
+    line-height: 25px;
+    background-color: #355870;
+    width: 60%;
+    border-radius: 0;
+}
 
 .progress-bar {
-    color: #3d383a;
-    height: 30px;
-    line-height: 30px;
+    background-color: #d0fd1e;
+    height: 25px;
+    line-height: 25px;
+    border: solid 3px #191a1c;
 }
 
 .bg-warning {
     background-color: #e7d523 !important;
+}
+
+.stat-name {
+    text-transform: uppercase;
+    color: #355870;
+}
+
+.xp {
+    height: 35px;
+    line-height: 35px;
+    width: 325px;
 }
 
 .imgAction {
