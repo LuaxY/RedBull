@@ -72,6 +72,10 @@ body::-webkit-scrollbar-thumb {
     margin-right: 10px;
 }
 
+#topBar div:nth-child(2) p {
+    margin-right: 20px;
+}
+
 #containerJeu {
     height: 92%;
 }
@@ -80,8 +84,62 @@ body::-webkit-scrollbar-thumb {
     font-size: 35px;
 }
 
+#boxEtudiant {
+    width: 100%;
+    padding: 20px 0 20px 0;
+    border-radius: 100px;
+    background-color: white;
+}
+
 #etudiant {
     max-height: 100%;
+}
+
+#lstAction {
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
+}
+
+#lstAction:before, #lstAction:after {
+    content: ' ';
+    height: 0;
+    position: absolute;
+    width: 0;
+    border: 10px solid transparent; /* arrow size */
+}
+
+/* these arrows will point up */
+
+/* top-stacked, smaller arrow */
+#lstAction:before {
+    border-bottom-color: #fff;  /* arrow color */
+
+    /* positioning */
+    position: absolute;
+    top: -19px;
+    left: 255px;
+    z-index: 2;
+}
+
+/* arrow which acts as a background shadow */
+#lstAction:after {
+    border-bottom-color: #333;  /* arrow color */
+
+    /* positioning */
+    position: absolute;
+    top: -24px;
+    left: 255px;
+    z-index: 1;
+}
+
+#lstAction .list-group a:first-child{
+    border-radius: 10px 10px 0 0;
+}
+
+#lstAction .list-group a:last-child{
+    border-radius: 0 0 10px 10px;
 }
 
 
@@ -108,9 +166,31 @@ body::-webkit-scrollbar-thumb {
 }
 
 @media (max-width: 767px) {
+    #action::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+    }
+
+    #action::-webkit-scrollbar {
+        width: 6px;
+        background-color: #F5F5F5;
+    }
+
+    #action::-webkit-scrollbar-thumb {
+        background-color: #6e6e6e;
+    }
+    #rowEtudiant {
+        height:45vh;
+    }
+
+    #boxEtudiant {
+        height: 50vh;
+        margin-top: 10vh;
+    }
+
     #action {
-        overflow: scroll;
-        height:90%;
+        overflow-y: scroll;
+        height:50vh;
         margin-top: 5%;
     }
 }
