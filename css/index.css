@@ -77,6 +77,11 @@
 }
 
 @media (max-width: 767px) {
+    
+    .container-fluid .test {
+        height: 150vh;
+    }
+
     .img {
         margin-top: 2.5vh;
         height: 45vh;
