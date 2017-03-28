@@ -46,10 +46,6 @@ body::-webkit-scrollbar-thumb {
     IDs
  */
 
-#aside {
-    margin-left: 3.5em;
-}
-
 #container {
     height: 100%;
     width: 100%;
@@ -100,7 +96,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #etudiant {
-    max-height: 100%;
+    max-height: 700px;
 }
 
 #lstAction {
@@ -109,7 +105,6 @@ body::-webkit-scrollbar-thumb {
     -moz-box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.75);
     font-size: small;
-    color: #afd3d4;
 }
 
 #lstAction .list-group a:first-child:before {
@@ -134,6 +129,38 @@ body::-webkit-scrollbar-thumb {
     border-radius: 0 0 10px 10px;
 }
 
+#stat-titre {
+    margin: 0 0 2vh;
+    padding-left: 5em;
+    background-color: #fff;
+    color: #afd3d4;
+    width: 100%;
+    font-size: xx-large;
+}
+
+#xp-bar {
+    margin-top: 15vh;
+    font-size: xx-large;
+    color: #fff;
+    font-weight: bold;
+    width: 100%;
+}
+
+#stats{
+    padding:0;
+    width:100%;
+}
+
+#stats > .row {
+    margin:0;
+}
+
+
+#argentProgressBar {
+    background-color: #fff800;
+}
+
+
 #soleil {
     position: absolute;
     top: -10%;
@@ -141,6 +168,10 @@ body::-webkit-scrollbar-thumb {
     z-index: 99;
 }
 
+#xp-bar .progress {
+    padding: 0;
+    width: 100%;
+}
 
 /*
     Classes
@@ -156,21 +187,28 @@ body::-webkit-scrollbar-thumb {
 
 .list-group-item {
     padding: 0.2em 0.5em;
-    color: #afd3d4;
+    color: #668485;
+}
+
+.list-group-item.disabled {
+    color: #87a9aa;
+    opacity: 0.7;
 }
 
 .progress {
     height: 25px;
     line-height: 25px;
     background-color: #355870;
-    width: 60%;
+    width: 100%;
     border-radius: 0;
 }
 
 .progress-bar {
     background-color: #d0fd1e;
     height: 25px;
-    line-height: 25px;
+    line-height: 18px;
+    color: #9f9097;
+    font-weight: bold;
     border: solid 3px #191a1c;
 }
 
@@ -186,7 +224,6 @@ body::-webkit-scrollbar-thumb {
 .xp {
     height: 35px;
     line-height: 35px;
-    width: 325px;
 }
 
 .imgAction {
@@ -198,6 +235,17 @@ body::-webkit-scrollbar-thumb {
     height: 48px;
 }
 
+.enCours {
+    background-color: #a7a7a7;
+}
+
+.enCours:visited {
+    background-color: #a7a7a7;
+}
+
+#lstAction .list-group a div img:nth-child(1),#lstAction .list-group a div img:nth-child(2) {
+    margin-right: -3%;
+}
 
 /*
     Media Queries
@@ -210,6 +258,25 @@ body::-webkit-scrollbar-thumb {
 }
 
 @media (max-width: 767px) {
+
+    #lstAction .list-group a:nth-child(12) div img:nth-child(2) {
+        margin-right: -8%;
+    }
+
+    #xp {
+        padding: 1% 0 0 20%;
+    }
+
+    #xp-bar {
+        margin-top: 20px;
+        font-size: inherit;
+        width: 100%;
+    }
+
+    #stat-titre {
+        font-size: inherit;
+    }
+
     #topBar div:nth-child(2) p {
         right: 18%;
         top: 1%;
@@ -257,7 +324,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     #action {
-        padding:0;
+        padding: 0;
         overflow-y: scroll;
         overflow-x: hidden;
         height: 50vh;
