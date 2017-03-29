@@ -244,9 +244,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 #lstAction .list-group a div img:nth-child(1),#lstAction .list-group a div img:nth-child(2) {
-    margin-right: -3%;
+    margin-right: -4%;
 }
 
+.imgAction {
+    width: 53px;
+}
 /*
     Media Queries
  */
@@ -333,7 +336,7 @@ body::-webkit-scrollbar-thumb {
 
     .imgAction {
         height: 1%;
-        width: 30%;
+        width: 52px;
     }
 }
 

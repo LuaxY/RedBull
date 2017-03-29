@@ -15,6 +15,7 @@ function upDate() {
     if (jeu.temps.getHours() >= 0 && jeu.temps.getHours() <= 6) {
         jeu.newDay = true;
     }
+
     if (jeu.newDay && jeu.temps.getHours() >= 7) {
         var valueEnergie = parseInt($($('.progress-bar')[1]).attr('aria-valuenow'));
         var valueMotiv = parseInt($($('.progress-bar')[2]).attr('aria-valuenow'));
@@ -27,6 +28,9 @@ function upDate() {
         $($('.progress-bar')[1]).attr('aria-valuenow', valueEnergie).css('width', valueEnergie + '%').html(valueEnergie + '%');
         $($('.progress-bar')[2]).attr('aria-valuenow', valueMotiv).css('width', valueMotiv + '%').html(valueMotiv + '%');
         $($('.progress-bar')[0]).attr('aria-valuenow', valueSante).css('width', valueSante + '%').html(valueSante + '%');
+        localStorage.setItem("sante", valueSante);
+        localStorage.setItem("energie", valueEnergie);
+        localStorage.setItem("motiv", valueMotiv);
         jeu.newDay = false;
     }
     refreshTimeoutId = setTimeout(upDate, 500);
@@ -36,12 +40,18 @@ function setNuit() {
     $('#soleil').attr('src', 'img/lune.png');
     $('#topBar').css('background-color', '#196b6b');
     $('#container').css('background-color', '#0b3638');
+    $('#container .list-group a:nth-child(6)').removeClass('disabled');
+    jeu.barLocked = false;
+    $('#container .list-group a:nth-child(6)').removeClass('disabled');
+    jeu.barBoiteLockedNuit = false;
 }
 
 function setJour() {
     $('#soleil').attr('src', 'img/soleil.png');
     $('#topBar').css('background-color', '#c6eaea');
     $('#container').css('background-color', '#afd3d4');
+    $('#container .list-group a:nth-child(6)').addClass('disabled');
+    jeu.barLocked = true;
 }
 
 function resetEtudiant() {
@@ -53,21 +63,37 @@ function resetEtudiant() {
 
 function upXp(val) {
     etudiant.xp = val;
+    localStorage.setItem('xp', etudiant.xp);
     var affiche = "";
     if (etudiant.xp <= 100 && etudiant.lvl == "B1") {
-            affiche = etudiant.xp + "/100";
+        affiche = etudiant.xp + "/100";
     } else if (etudiant.xp >= 100 && etudiant.lvl == "B1") {
         affiche = etudiant.xp - 100 + "/300";
         etudiant.xp -= 100;
         jeu.divXpPourcent = 300;
         etudiant.lvl = "B2";
-    }else if ((etudiant.xp <= 300 && etudiant.lvl == "B2")) {
+        $('#topBar div:first-child p:nth-child(2)').text(etudiant.lvl);
+        localStorage.setItem('classe', etudiant.lvl);
+
+        $('#container .list-group a:nth-child(9)').removeClass('disabled');
+        jeu.salleLocked = false;
+        jeu.nbRedBull = jeu.nbRedBull + 3;
+    } else if ((etudiant.xp <= 300 && etudiant.lvl == "B2")) {
         affiche = etudiant.xp + "/300";
     } else if (etudiant.xp >= 300 && etudiant.lvl == "B2") {
         affiche = etudiant.xp - 300 + "/500";
         etudiant.xp -= 300;
         jeu.divXpPourcent = 500;
         etudiant.lvl = "B3";
+        $('#topBar div:first-child p:nth-child(2)').text(etudiant.lvl);
+        localStorage.setItem('classe', etudiant.lvl);
+        $('#container .list-group a:nth-child(12)').removeClass('disabled');
+        jeu.habitsLocked = false;
+        $('#container .list-group a:nth-child(15)').removeClass('disabled');
+        jeu.restaurantLocked = false;
+        $('#container .list-group a:nth-child(5)').removeClass('disabled');
+        jeu.travaillerLocked = false;
+        jeu.nbRedBull = jeu.nbRedBull + 3;
     } else if ((etudiant.xp <= 500 && etudiant.lvl == "B3")) {
         affiche = etudiant.xp + "/500";
     } else if (etudiant.xp >= 500 && etudiant.lvl == "B3") {
@@ -75,6 +101,11 @@ function upXp(val) {
         etudiant.xp -= 500;
         jeu.divXpPourcent = 1000;
         etudiant.lvl = "M1";
+        $('#topBar div:first-child p:nth-child(2)').text(etudiant.lvl);
+        localStorage.setItem('classe', etudiant.lvl);
+        $('#container .list-group a:nth-child(3)').removeClass('disabled');
+        jeu.specLocked = false;
+        jeu.nbRedBull = jeu.nbRedBull + 3;
     } else if ((etudiant.xp <= 1000 && etudiant.lvl == "M1")) {
         affiche = etudiant.xp + "/1000";
     } else if (etudiant.xp >= 1000 && etudiant.lvl == "M1") {
@@ -82,6 +113,11 @@ function upXp(val) {
         etudiant.xp -= 1000;
         jeu.divXpPourcent = 2000;
         etudiant.lvl = "M2";
+        $('#topBar div:first-child p:nth-child(2)').text(etudiant.lvl);
+        localStorage.setItem('classe', etudiant.lvl);
+        $('#container .list-group a:nth-child(7)').removeClass('disabled');
+        jeu.barBoiteLocked = false;
+        jeu.nbRedBull = jeu.nbRedBull + 3;
     } else if ((etudiant.xp <= 2000 && etudiant.lvl == "M2")) {
         affiche = etudiant.xp + "/2000";
     } else if (etudiant.xp >= 2000) {
@@ -99,30 +135,35 @@ function action(btn, isStop) {
     switch (btn.id) {
         case 'redbull':
             if (jeu.doubleXp == 1) {
-                if (!jeu.actionEnCours)
-                    if (localStorage.getItem('sexe') == 'fille')
-                        $('#etudiant').attr('src', 'img/filleRedBull.png');
-                    else
-                        $('#etudiant').attr('src', 'img/garconRedBull.png');
-                $(btn).addClass('enCours');
-                var txt = $(btn.children[0].children[0]).text();
-                $(btn.children[0].children[0]).text('Mmmmmh de la RedBull !');
-                $(btn.children[0].children[0]).css('color', 'brown');
-                jeu.doubleXp = 2;
+                if (jeu.nbRedBull > 0) {
+                    if (!jeu.actionEnCours)
+                        if (localStorage.getItem('sexe') == 'fille')
+                            $('#etudiant').attr('src', 'img/filleRedBull.png');
+                        else
+                            $('#etudiant').attr('src', 'img/garconRedBull.png');
+                    $(btn).addClass('enCours');
+                    $(btn.children[0].children[0]).text('Mmmmmh de la RedBull !');
+                    $(btn.children[0].children[0]).css('color', 'brown');
+                    jeu.doubleXp = 2;
+                    jeu.nbRedBull -= 1;
 
-                refreshIntervalIdRed = setInterval(function () {
-                    tempoDoubleXp++;
-                    if (tempoDoubleXp >= 30) {
-                        $(btn).removeClass('enCours');
-                        if (!jeu.actionEnCours)
-                            resetEtudiant();
-                        tempoDoubleXp = 0;
-                        jeu.doubleXp = 1;
-                        clearInterval(refreshIntervalIdRed);
-                        $(btn.children[0].children[0]).text(txt);
-                        $(btn.children[0].children[0]).css('color', '#668485');
-                    }
-                }, 1000);
+                    refreshIntervalIdRed = setInterval(function () {
+                        tempoDoubleXp++;
+                        if (tempoDoubleXp >= 5) {
+                            $(btn).removeClass('enCours');
+                            if (!jeu.actionEnCours)
+                                resetEtudiant();
+                            tempoDoubleXp = 0;
+                            jeu.doubleXp = 1;
+                            clearInterval(refreshIntervalIdRed);
+                            $(btn.children[0].children[0]).html("Boire une Red Bull (1h) (<p>"+jeu.nbRedBull+"</p>)");
+                            $(btn.children[0].children[0]).css('color', '#668485');
+                        }
+                    }, 1000);
+                } else {
+                    $('#modalInfo .modal-body').html('Vous n\'avez plus de canettes...');
+                    $('#modalInfo').modal('show');
+                }
             }
             break;
         case 'reviser':
@@ -147,27 +188,25 @@ function action(btn, isStop) {
                 refreshIntervalId = setInterval(function () {
 
                     if (valueEnergie <= 0 || valueMotiv <= 0) {
-                        var message = "";
                         if (valueEnergie <= 0) {
                             $($('.progress-bar')[1]).attr('aria-valuenow', 0).css('width', 0 + '%').html(0 + '%');
-                            message = "Vous n'avez plus d'energie \n";
+                            $('#modalInfo .modal-body').html("Vous n'avez plus d'energie \n");
+
+                            $(btn).removeClass('enCours');
+                            resetEtudiant();
+                            jeu.actionEnCours = false;
+                            $(btn.children[0].children[0]).text('Vendre des flyers');
+                            $(btn.children[0].children[0]).css('color', '#668485');
+                            $(btn).attr("onclick", "action(this, false)");
+                            clearInterval(refreshIntervalId);
+                            $('#modalInfo').modal('show');
                         }
                         if (valueMotiv <= 0) {
                             $('#modalInfoPerdu').modal('show');
                         }
-                        $('#modalInfo .modal-body').html(message);
-
-                        $(btn).removeClass('enCours');
-                        resetEtudiant();
-                        jeu.actionEnCours = false;
-                        $(btn.children[0].children[0]).text('Vendre des flyers');
-                        $(btn.children[0].children[0]).css('color', '#668485');
-                        $(btn).attr("onclick", "action(this, false)");
-                        clearInterval(refreshIntervalId);
-                        $('#modalInfo').modal('show');
                     } else {
                         jeu.temps.setMinutes(jeu.temps.getMinutes() + 30);
-                        var valueAffiche = upXp(parseInt(etudiant.xp) + (1 * jeu.doubleXp));
+                        var valueAffiche = upXp(parseInt(etudiant.xp) + (3 * jeu.doubleXp));
                         valueEnergie = parseInt(valueEnergie) - jeu.moinsEnergie;
                         valueMotiv = parseInt(valueMotiv) - jeu.moinsMotiv;
                         $($('.progress-bar')[4]).attr('aria-valuenow', (etudiant.xp / jeu.divXpPourcent) * 100).css('width', (etudiant.xp / jeu.divXpPourcent) * 100 + '%').text(valueAffiche);
@@ -187,24 +226,88 @@ function action(btn, isStop) {
             }
             break;
         case 'spec':
-            if (jeu.specLocked) {
-                if (localStorage.getItem('classe') == 'Ingésup') {
-                    if (localStorage.getItem('sexe') == 'fille')
-                        $('#etudiant').attr('src', 'img/filleInge.png');
-                    else
-                        $('#etudiant').attr('src', 'img/garconInge.png');
+            if (!jeu.specLocked) {
+                if (!jeu.actionEnCours) {
+                    jeu.actionEnCours = true;
+                    if (localStorage.getItem('classe') == 'Ingésup') {
+                        if (localStorage.getItem('sexe') == 'fille')
+                            $('#etudiant').attr('src', 'img/filleInge.png');
+                        else
+                            $('#etudiant').attr('src', 'img/garconInge.png');
+                    }
+                    else if (localStorage.getItem('classe') == 'Lim\'Art') {
+                        if (localStorage.getItem('sexe') == 'fille')
+                            $('#etudiant').attr('src', 'img/filleLimart.png');
+                        else
+                            $('#etudiant').attr('src', 'img/garconLimart.png');
+                    }
+                    else {
+                        if (localStorage.getItem('sexe') == 'fille')
+                            $('#etudiant').attr('src', 'img/filleIdi.png');
+                        else
+                            $('#etudiant').attr('src', 'img/garconIdi.png');
+                    }
+
+                    $(btn).addClass('enCours');
+                    if (localStorage.getItem('classe') == 'Ingésup') {
+                        $(btn.children[0].children[0]).text('Arrêter de Jouer');
+                    }
+                    else if (localStorage.getItem('classe') == 'Lim\'Art') {
+                        $(btn.children[0].children[0]).text('Arrêter de Dessiner');
+                    }
+                    else {
+                        $(btn.children[0].children[0]).text('Arrêter de Moneyer');
+                    }
+                    $(btn.children[0].children[0]).css('color', 'brown');
+                    $(btn).attr("onclick", "action(this, true)");
+                    var valueXP = parseInt($($('.progress-bar')[4]).attr('aria-valuenow'));
+                    var valueEnergie = parseInt($($('.progress-bar')[1]).attr('aria-valuenow'));
+
+                    if (valueXP == 1)
+                        valueXP = 0;
+                    refreshIntervalId = setInterval(function () {
+
+                        if (valueEnergie <= 0 || valueMotiv <= 0) {
+                            var message = "";
+                            if (valueEnergie <= 0) {
+                                $($('.progress-bar')[1]).attr('aria-valuenow', 0).css('width', 0 + '%').html(0 + '%');
+                                message = "Vous n'avez plus d'energie \n";
+                            }
+
+                            $('#modalInfo .modal-body').html(message);
+
+                            $(btn).removeClass('enCours');
+                            resetEtudiant();
+                            jeu.actionEnCours = false;
+                            $(btn.children[0].children[0]).css('color', '#668485');
+                            $(btn).attr("onclick", "action(this, false)");
+                            clearInterval(refreshIntervalId);
+                            $('#modalInfo').modal('show');
+                        } else {
+                            jeu.temps.setMinutes(jeu.temps.getMinutes() + 30);
+                            var valueAffiche = upXp(parseInt(etudiant.xp) + (6 * jeu.doubleXp));
+                            valueEnergie = parseInt(valueEnergie) - jeu.moinsEnergie;
+                            $($('.progress-bar')[4]).attr('aria-valuenow', (etudiant.xp / jeu.divXpPourcent) * 100).css('width', (etudiant.xp / jeu.divXpPourcent) * 100 + '%').text(valueAffiche);
+                            $($('.progress-bar')[1]).attr('aria-valuenow', valueEnergie).css('width', valueEnergie + '%').html(valueEnergie + '%');
+                        }
+                    }, 2000);
                 }
-                else if (localStorage.getItem('classe') == 'Lim\'Art') {
-                    if (localStorage.getItem('sexe') == 'fille')
-                        $('#etudiant').attr('src', 'img/filleLimart.png');
-                    else
-                        $('#etudiant').attr('src', 'img/garconLimart.png');
-                }
-                else {
-                    if (localStorage.getItem('sexe') == 'fille')
-                        $('#etudiant').attr('src', 'img/filleIdi.png');
-                    else
-                        $('#etudiant').attr('src', 'img/garconIdi.png');
+                if (isStop == true) {
+                    $(btn).removeClass('enCours');
+                    resetEtudiant();
+                    jeu.actionEnCours = false;
+                    if (localStorage.getItem('classe') == 'Ingésup') {
+                        $(btn.children[0].children[0]).text('Capa.  spéciale: Jouer');
+                    }
+                    else if (localStorage.getItem('classe') == 'Lim\'Art') {
+                        $(btn.children[0].children[0]).text('Capa.  spéciale: Dessiner');
+                    }
+                    else {
+                        $(btn.children[0].children[0]).text('Capa.  spéciale: Money');
+                    }
+                    $(btn.children[0].children[0]).css('color', '#668485');
+                    $(btn).attr("onclick", "action(this, false)");
+                    clearInterval(refreshIntervalId);
                 }
             }
             break;
@@ -262,7 +365,7 @@ function action(btn, isStop) {
             }
             break;
         case 'travailler':
-            if (jeu.travaillerLocked) {
+            if (!jeu.travaillerLocked) {
 
                 if (!jeu.actionEnCours) {
                     jeu.actionEnCours = true;
@@ -317,67 +420,73 @@ function action(btn, isStop) {
             }
             break;
         case 'bar':
-            if (!jeu.actionEnCours) {
-                jeu.actionEnCours = true;
-                if (localStorage.getItem('sexe') == 'fille')
-                    $('#etudiant').attr('src', 'img/filleBar.png');
-                else
-                    $('#etudiant').attr('src', 'img/garconBar.png');
-                $(btn).addClass('enCours');
-                $(btn.children[0].children[0]).text('Rentrer à la maison');
-                $(btn.children[0].children[0]).css('color', 'brown');
-                $(btn).attr("onclick", "action(this, true)");
+            if (!jeu.barLocked) {
+                if (!jeu.actionEnCours) {
+                    jeu.actionEnCours = true;
+                    if (localStorage.getItem('sexe') == 'fille')
+                        $('#etudiant').attr('src', 'img/filleBar.png');
+                    else
+                        $('#etudiant').attr('src', 'img/garconBar.png');
+                    $(btn).addClass('enCours');
+                    $(btn.children[0].children[0]).text('Rentrer à la maison');
+                    $(btn.children[0].children[0]).css('color', 'brown');
+                    $(btn).attr("onclick", "action(this, true)");
 
-                var valueEnergie = parseInt($($('.progress-bar')[1]).attr('aria-valuenow'));
-                var valueMotiv = parseInt($($('.progress-bar')[2]).attr('aria-valuenow'));
-                var valueSante = parseInt($($('.progress-bar')[0]).attr('aria-valuenow'));
+                    var valueEnergie = parseInt($($('.progress-bar')[1]).attr('aria-valuenow'));
+                    var valueMotiv = parseInt($($('.progress-bar')[2]).attr('aria-valuenow'));
+                    var valueSante = parseInt($($('.progress-bar')[0]).attr('aria-valuenow'));
 
-                refreshIntervalId = setInterval(function () {
-                    if (valueEnergie <= 0 || valueSante <= 0) {
-                        var message = "";
-                        if (valueEnergie <= 0) {
-                            $($('.progress-bar')[1]).attr('aria-valuenow', 0).css('width', 0 + '%').html(0 + '%');
-                            message = "Vous n'avez plus d'energie \n";
+                    refreshIntervalId = setInterval(function () {
+                        if (valueEnergie <= 0 || valueSante <= 0) {
+                            var message = "";
+                            if (valueEnergie <= 0) {
+                                $($('.progress-bar')[1]).attr('aria-valuenow', 0).css('width', 0 + '%').html(0 + '%');
+                                message = "Vous n'avez plus d'energie \n";
 
-                            $('#modalInfo .modal-body').html(message);
-                            $(btn).removeClass('enCours');
-                            resetEtudiant();
-                            jeu.actionEnCours = false;
-                            $(btn.children[0].children[0]).text('Aller au bar');
-                            $(btn.children[0].children[0]).css('color', '#668485');
-                            $(btn).attr("onclick", "action(this, false)");
-                            $('#modalInfo').modal('show');
+                                $('#modalInfo .modal-body').html(message);
+                                $(btn).removeClass('enCours');
+                                resetEtudiant();
+                                jeu.actionEnCours = false;
+                                $(btn.children[0].children[0]).text('Aller au bar');
+                                $(btn.children[0].children[0]).css('color', '#668485');
+                                $(btn).attr("onclick", "action(this, false)");
+                                $('#modalInfo').modal('show');
+                            }
+
+                            if (valueSante <= 0) {
+                                $('#modalInfoPerdu').modal('show');
+                            }
+                            clearInterval(refreshIntervalId);
+                        } else {
+                            jeu.temps.setMinutes(jeu.temps.getMinutes() + 30);
+                            valueEnergie = parseInt(valueEnergie) - jeu.moinsEnergie;
+                            valueMotiv = parseInt(valueMotiv) + jeu.plusMotiv;
+                            valueSante = parseInt(valueSante) - jeu.moinsSante;
+                            if (parseInt(valueMotiv) > 100)
+                                valueMotiv = 100;
+                            $($('.progress-bar')[1]).attr('aria-valuenow', valueEnergie).css('width', valueEnergie + '%').html(valueEnergie + '%');
+                            $($('.progress-bar')[2]).attr('aria-valuenow', valueMotiv).css('width', valueMotiv + '%').html(valueMotiv + '%');
+                            $($('.progress-bar')[0]).attr('aria-valuenow', valueSante).css('width', valueSante + '%').html(valueSante + '%');
                         }
 
-                        if (valueSante <= 0) {
-                            $('#modalInfoPerdu').modal('show');
-                        }
-                        clearInterval(refreshIntervalId);
-                    } else {
-                        jeu.temps.setMinutes(jeu.temps.getMinutes() + 30);
-                        valueEnergie = parseInt(valueEnergie) - jeu.moinsEnergie;
-                        valueMotiv = parseInt(valueMotiv) + jeu.plusMotiv;
-                        valueSante = parseInt(valueSante) - jeu.moinsSante;
-                        if (parseInt(valueMotiv) > 100)
-                            valueMotiv = 100;
-                        $($('.progress-bar')[1]).attr('aria-valuenow', valueEnergie).css('width', valueEnergie + '%').html(valueEnergie + '%');
-                        $($('.progress-bar')[2]).attr('aria-valuenow', valueMotiv).css('width', valueMotiv + '%').html(valueMotiv + '%');
-                        $($('.progress-bar')[0]).attr('aria-valuenow', valueSante).css('width', valueSante + '%').html(valueSante + '%');
-                    }
-
-                }, 2000);
-            } else if (isStop == true) {
-                $(btn).removeClass('enCours');
-                resetEtudiant();
-                jeu.actionEnCours = false;
-                $(btn.children[0].children[0]).text('Aller au Bar');
-                $(btn.children[0].children[0]).css('color', '#668485');
-                $(btn).attr("onclick", "action(this, false)");
-                clearInterval(refreshIntervalId);
+                    }, 2000);
+                }
+                if (isStop == true) {
+                    $(btn).removeClass('enCours');
+                    resetEtudiant();
+                    jeu.actionEnCours = false;
+                    $(btn.children[0].children[0]).text('Aller au Bar');
+                    $(btn.children[0].children[0]).css('color', '#668485');
+                    $(btn).attr("onclick", "action(this, false)");
+                    clearInterval(refreshIntervalId);
+                }
+            } else {
+                $('#modalInfo .modal-body').text("Vous ne pouvez pas aller au bar !");
+                $('#modalInfo').modal('show');
             }
             break;
         case 'barBoite':
-            if (jeu.barBoiteLocked) {
+            if (!jeu.barBoiteLocked && !jeu.barBoiteLockedNuit) {
                 if (!jeu.actionEnCours) {
                     jeu.actionEnCours = true;
                     if (localStorage.getItem('sexe') == 'fille')
@@ -427,7 +536,8 @@ function action(btn, isStop) {
                         }
 
                     }, 2000);
-                } else if (isStop == true) {
+                }
+                if (isStop == true) {
                     $(btn).removeClass('enCours');
                     resetEtudiant();
                     jeu.actionEnCours = false;
@@ -436,6 +546,9 @@ function action(btn, isStop) {
                     $(btn).attr("onclick", "action(this, false)");
                     clearInterval(refreshIntervalId);
                 }
+            } else {
+                $('#modalInfo .modal-body').text("Vous ne pouvez pas aller au bar et en boîte !");
+                $('#modalInfo').modal('show');
             }
             break;
         case 'courir':
@@ -493,7 +606,7 @@ function action(btn, isStop) {
             }
             break;
         case 'salle':
-            if (jeu.salleLocked) {
+            if (!jeu.salleLocked) {
                 if (!jeu.actionEnCours) {
                     jeu.actionEnCours = true;
                     if (localStorage.getItem('sexe') == 'fille')
@@ -627,13 +740,12 @@ function action(btn, isStop) {
                         $('#modalInfo').modal('show');
                     } else {
                         jeu.temps.setMinutes(jeu.temps.getMinutes() + 30);
-                        valueXP = parseInt(valueXP) + (1 * jeu.doubleXp);
-                        var valueAffiche = upXp(valueXP);
                         valueEnergie = parseInt(valueEnergie) - jeu.moinsMoinsEnergie;
                         valueMotiv = parseInt(valueMotiv) + jeu.plusMotiv;
                         if (parseInt(valueMotiv) > 100)
                             valueMotiv = 100;
-                        $($('.progress-bar')[4]).attr('aria-valuenow', valueXP).css('width', valueXP + '%').html(valueAffiche);
+                        var valueAffiche = upXp(parseInt(etudiant.xp) + (3 * jeu.doubleXp));
+                        $($('.progress-bar')[4]).attr('aria-valuenow', (etudiant.xp / jeu.divXpPourcent) * 100).css('width', (etudiant.xp / jeu.divXpPourcent) * 100 + '%').text(valueAffiche);
                         $($('.progress-bar')[1]).attr('aria-valuenow', valueEnergie).css('width', valueEnergie + '%').html(valueEnergie + '%');
                         $($('.progress-bar')[2]).attr('aria-valuenow', valueMotiv).css('width', valueMotiv + '%').html(valueMotiv + '%');
                     }
@@ -650,42 +762,47 @@ function action(btn, isStop) {
             }
             break;
         case 'habits':
-            if (jeu.habitsLocked) {
+            if (!jeu.habitsLocked) {
                 if (!jeu.actionEnCours) {
-                    jeu.actionEnCours = true;
-                    if (localStorage.getItem('sexe') == 'fille')
-                        $('#etudiant').attr('src', 'img/filleShopping.png');
-                    else
-                        $('#etudiant').attr('src', 'img/garconPendrie.png');
-                    $(btn).addClass('enCours');
-                    $(btn.children[0].children[0]).text('Rentrer à la maison');
-                    $(btn.children[0].children[0]).css('color', 'brown');
-                    $(btn).attr("onclick", "action(this, true)");
-
-                    var valueMotiv = parseInt($($('.progress-bar')[2]).attr('aria-valuenow'));
                     var valueArgent = parseInt($($('.progress-bar')[3]).attr('aria-valuenow'));
+                    if (parseInt(valueArgent) >= 50) {
+                        jeu.actionEnCours = true;
+                        if (localStorage.getItem('sexe') == 'fille')
+                            $('#etudiant').attr('src', 'img/filleShopping.png');
+                        else
+                            $('#etudiant').attr('src', 'img/garconPendrie.png');
+                        $(btn).addClass('enCours');
+                        $(btn.children[0].children[0]).text('Rentrer à la maison');
+                        $(btn.children[0].children[0]).css('color', 'brown');
+                        $(btn).attr("onclick", "action(this, true)");
 
-                    refreshIntervalId = setInterval(function () {
-                        if (parseInt(valueArgent) >= 50) {
-                            $('#modalInfo .modal-body').html('Vous n\'avez pas assez de sous');
-                            $(btn).removeClass('enCours');
-                            resetEtudiant();
-                            jeu.actionEnCours = false;
-                            $(btn.children[0].children[0]).text('Shopping');
-                            $(btn.children[0].children[0]).css('color', '#668485');
-                            $(btn).attr("onclick", "action(this, false)");
-                            clearInterval(refreshIntervalId);
-                            $('#modalInfo').modal('show');
-                        } else {
-                            jeu.temps.setMinutes(jeu.temps.getMinutes() + 30);
-                            valueMotiv = parseInt(valueMotiv) + jeu.plusPlusMotiv;
-                            valueArgent = parseInt(valueArgent) - 50;
-                            if (parseInt(valueMotiv) > 100)
-                                valueMotiv = 100;
-                            $($('.progress-bar')[3]).attr('aria-valuenow', valueArgent).html(valueArgent + '€');
-                            $($('.progress-bar')[2]).attr('aria-valuenow', valueMotiv).css('width', valueMotiv + '%').html(valueMotiv + '%');
-                        }
-                    }, 2000);
+                        var valueMotiv = parseInt($($('.progress-bar')[2]).attr('aria-valuenow'));
+
+                        refreshIntervalId = setInterval(function () {
+                            if (parseInt(valueArgent) < 50) {
+                                $('#modalInfo .modal-body').html('Vous n\'avez plus assez de sous');
+                                $(btn).removeClass('enCours');
+                                resetEtudiant();
+                                jeu.actionEnCours = false;
+                                $(btn.children[0].children[0]).text('Shopping');
+                                $(btn.children[0].children[0]).css('color', '#668485');
+                                $(btn).attr("onclick", "action(this, false)");
+                                clearInterval(refreshIntervalId);
+                                $('#modalInfo').modal('show');
+                            } else {
+                                jeu.temps.setMinutes(jeu.temps.getMinutes() + 30);
+                                valueMotiv = parseInt(valueMotiv) + jeu.plusPlusMotiv;
+                                valueArgent = parseInt(valueArgent) - 50;
+                                if (parseInt(valueMotiv) > 100)
+                                    valueMotiv = 100;
+                                $($('.progress-bar')[3]).attr('aria-valuenow', valueArgent).html(valueArgent + '€');
+                                $($('.progress-bar')[2]).attr('aria-valuenow', valueMotiv).css('width', valueMotiv + '%').html(valueMotiv + '%');
+                            }
+                        }, 2000);
+                    } else {
+                        $('#modalInfo .modal-body').html('Vous n\'avez pas assez de sous');
+                        $('#modalInfo').modal('show');
+                    }
                 } else if (isStop == true) {
                     $(btn).removeClass('enCours');
                     resetEtudiant();
@@ -751,7 +868,7 @@ function action(btn, isStop) {
             }
             break;
         case 'restaurant':
-            if (jeu.restaurantLocked) {
+            if (!jeu.restaurantLocked) {
                 var valueArgent = parseInt($($('.progress-bar')[3]).attr('aria-valuenow'));
                 if (parseInt(valueArgent) >= 50) {
                     if (!jeu.actionEnCours) {
@@ -787,7 +904,8 @@ function action(btn, isStop) {
 
 function dormir(btn) {
     if (!jeu.dodo && !jeu.actionEnCours) {
-        jeu.dodo = true
+        jeu.dodo = true;
+        jeu.actionEnCours = true;
         var nbHeureDodo = btn.parentElement.children[0].children[0].value;
         if (nbHeureDodo > 0) {
             $('#dodo').addClass('enCours');
@@ -825,6 +943,7 @@ function dormir(btn) {
                         $('#dodo').css('color', '#668485');
                         clearInterval(refreshIntervalId);
                         jeu.dodo = false;
+                        jeu.actionEnCours = false;
                         upDate();
                     }
                 },

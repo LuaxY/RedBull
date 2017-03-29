@@ -1,6 +1,6 @@
 function jeu() {
     this.temps = new Date();
-    this.doubleXp = 381;
+    this.doubleXp = 1;
     this.actionEnCours = false;
     this.moinsEnergie = 5;
     this.moinsMoinsEnergie = 15;
@@ -12,16 +12,18 @@ function jeu() {
     this.moinsSante = 10;
     this.plusSante = 5;
     this.plusPlusSante = 15;
-    this.travaillerLocked = false;
-    this.barBoiteLocked = false;
-    this.salleLocked = false;
-    this.habitsLocked = false;
-    this.restaurantLocked = false;
-    this.specLocked = false;
+    this.travaillerLocked = true;
+    this.barLocked = true;
+    this.barBoiteLocked = true;
+    this.barBoiteLockedNuit = true;
+    this.salleLocked = true;
+    this.habitsLocked = true;
+    this.restaurantLocked = true;
+    this.specLocked = true;
     this.newDay = false;
     this.dodo = false;
     this.divXpPourcent = 100;
-
+    this.nbRedBull = 3;
 }
 
 function etudiant() {
